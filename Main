@@ -1,0 +1,51 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class Main implements ActionListener {
+
+    private Ball ball;
+    private Timer timer;
+    private JFrame frame;
+
+    public Main() {
+        // Create the ball and set initial position and speed
+        ball = new Ball(50, 250, 250, 5);
+
+        // Set up the window
+        frame = new JFrame("Moving Ball Game");
+        frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
+        frame.setVisible(true);
+
+        // Add the ball to the window
+        frame.add(ball);
+
+        // Add mouse click listener to the ball
+        ball.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                // Increase ball speed on click
+                ball.increaseSpeed();
+            }
+        });
+
+        // Set up a timer to move the ball
+        timer = new Timer(50, this);
+        timer.start();
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        // Move the ball and check for collision with walls
+        ball.moveBall();
+        if (ball.getXPosition() <= 0 || ball.getXPosition() + ball.getSize() >= frame.getWidth()) {
+            // Game over if ball hits wall
+            JOptionPane.showMessageDialog(frame, "Game Over!");
+            timer.stop();
+        }
+    }
+
+    public static void main(String[] args) {
+        new Main();
+    }
+}
