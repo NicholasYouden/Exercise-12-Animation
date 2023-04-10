@@ -1,0 +1,55 @@
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+
+public class Ball {
+    private int size;
+    private int xPosition;
+    private int yPosition;
+    private int xSpeed;
+
+    public Ball(int size, int xPosition, int yPosition, int xSpeed) {
+        this.size = size;
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.xSpeed = xSpeed;
+    }
+
+    public void drawBall(Graphics g) {
+        g.setColor(Color.RED);
+        g.fillOval(xPosition - size / 2, yPosition - size / 2, size, size);
+    }
+
+    public void moveBall() {
+        xPosition += xSpeed;
+        int windowWidth = 0;
+        if (xPosition - size / 2 <= 0 || xPosition + size / 2 >= windowWidth) {
+            // Ball hits the left or right wall, GAME OVER! Show a popup.
+            System.out.println("GAME OVER!");
+            System.exit(0);
+        }
+    }
+
+    public void setXSpeed(int xSpeed) {
+        this.xSpeed = xSpeed;
+    }
+
+    public boolean isClicked(int mouseX, int mouseY) {
+        double distance = Math.sqrt(Math.pow(mouseX - xPosition, 2) + Math.pow(mouseY - yPosition, 2));
+        return distance <= size / 2;
+    }
+
+    public void addMouseListener(MouseAdapter mouseAdapter) {
+    }
+
+    public void increaseSpeed() {
+    }
+
+    public Object getSize() {
+        return null;
+    }
+
+    public int getXPosition() {
+        return 0;
+    }
+}
